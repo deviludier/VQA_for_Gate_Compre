@@ -3,7 +3,7 @@
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
-from qiskit import *
+from qiskit import QuantumCircuit, assemble, Aer
 import numpy as np
 import qiskit.quantum_info as qi
 from qiskit.quantum_info.operators.channel.quantum_channel import QuantumChannel
@@ -109,4 +109,13 @@ if __name__ == '__main__':
     ##############################
     # Apply parameterized quantum circuit U(\theta)
     ##############################
-    qubit_num3 = qubit_num1 + qubit_num2
+    qubit_num3 = qubit_num1 + 2*qubit_num2
+    control_params_values3 = np.random.uniform(low=0, high=2 * np.pi, size=(qubit_num3 * 2 * 2 - 2 * 2))
+    control_params_values4 = np.random.uniform(low=0, high=2 * np.pi, size=(qubit_num3 * 2 * 2 - 2 * 2))
+    circuit3 = creata_ansatz1(control_params_values3, qubit_num1)
+    circuit4 = creata_ansatz1(control_params_values3, qubit_num1)
+    circuit = QuantumCircuit(qubit_num3)
+    circuit.initialize()
+    circuit = circuit3 + circuit4
+    sim = Aer.get_backend('aer_simulator')
+
